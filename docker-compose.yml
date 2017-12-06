@@ -1,0 +1,63 @@
+version: '3.3'
+
+services:
+
+  php7fpm:
+    build: ./build/php-fpm
+    container_name: docker-php7fpm
+    working_dir: /usr/share/nginx/html
+    restart: always
+    environment:
+      - TERM=xterm
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./config/php7.ini:/usr/local/etc/php/php.ini
+    links:
+      - mysql
+    ports:
+      - "9000:9000"
+
+  mysql:
+    image: mariadb:10.3.0
+    container_name: docker-mysql
+    restart: always
+    environment:
+      - TERM=xterm
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=db_example
+    volumes:
+      - ./db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  pma:
+    image: phpmyadmin/phpmyadmin:4.7.3-1
+    container_name: docker-phpmyadmin
+    restart: always
+    environment:
+      - TERM=xterm
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+    links:
+      - "mysql:db"
+    ports:
+      - "8080:80"
+
+  nginx:
+    image: nginx:1.12.1
+    container_name: docker-nginx
+    working_dir: /usr/share/nginx/html
+    restart: always
+    environment:
+      - TERM=xterm
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./vhosts:/etc/nginx/conf.d/vhosts
+      - ./conf.d/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - "php7fpm:phpfpm"
+    ports:
+      - "80:80"
+      - "443:443"
