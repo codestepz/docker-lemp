@@ -1,4 +1,4 @@
-# [TH] Build LEMP Server by Vultr (VPS)
+# [TH] Build LEMP Server by Ubuntu 16 (VPS)
 
 Tutorial: https://medium.com/drivesoft/ทดลอง-vultr-ใช้งาน-docker-lemp-server-a83c14bd5a05#.opix69c6r
 
@@ -6,7 +6,7 @@ Tutorial: https://medium.com/drivesoft/ทดลอง-vultr-ใช้งาน-
 
 ```
 $ sudo mkdir -p /build && cd /build
-$ sudo apt-get install git -y && sudo git clone https://github.com/drivesoft-newage/docker-awesome.git
+$ sudo apt-get install git -y && sudo git clone https://github.com/drivesoft-technology/docker-awesome.git
 $ cd /build/docker-awesome
 
 $ sudo bash docker-install/install-docker-engine-on-ubuntu16.sh
